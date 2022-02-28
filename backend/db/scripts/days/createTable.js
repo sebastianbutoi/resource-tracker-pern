@@ -1,4 +1,4 @@
-import query from "../index.js";
+import query from "../../config.js";
 
 const sqlString = `CREATE TABLE IF NOT EXISTS days (day_id SERIAL PRIMARY KEY, name TEXT, date TEXT );`;
 
