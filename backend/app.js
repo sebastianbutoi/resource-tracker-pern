@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { readDaysTable, filterDays } from "./db/scripts/days/readTable.js";
 import { readNotesTable, readNoteByDay } from "./db/scripts/notes/readTable.js";
 import { populateNotesTable } from "./db/scripts/notes/populateTable.js";
+import { updateNote } from "./db/scripts/notes/updateNote.js";
 
 dotenv.config();
 const app = express();
@@ -37,10 +38,6 @@ app.get("/note/:dayname", async (req, res) => {
   res.json({ payload: data });
 });
 
-app.listen(PORT, () => {
-  console.log("Listening on port: ", PORT);
-});
-
 app.post("/note/:dayname", async (req, res) => {
   const queryParams = {
     dayname: req.params.dayname,
@@ -49,4 +46,18 @@ app.post("/note/:dayname", async (req, res) => {
   };
   const insert = await populateNotesTable(queryParams);
   res.json({ payload: insert });
+});
+
+app.patch("/note/:dayname", async (req, res) => {
+  const queryParams = {
+    day: req.params.dayname,
+    title: req.body.title,
+    update: req.body.description,
+  };
+  const updated = await updateNote(queryParams);
+  res.json({ payload: updated });
+});
+
+app.listen(PORT, () => {
+  console.log("Listening on port: ", PORT);
 });
