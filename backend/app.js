@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { readDaysTable } from "./db/scripts/days/readTable.js";
+import { readDaysTable, filterDays } from "./db/scripts/days/readTable.js";
 import { readNotesTable } from "./db/scripts/notes/readTable.js";
 
 dotenv.config();
@@ -22,7 +22,12 @@ app.get("/alldata", async (req, res) => {
     daysTable: daysTable,
     noteTable: noteTable,
   };
-  res.status(200).json(data);
+  res.status(200).json({ payload: data });
+});
+
+app.get("/note/filter/:title", async (req, res) => {
+  const response = await filterDays({ title: req.params.title });
+  res.status(200).json({ payload: response });
 });
 
 app.listen(PORT, () => {
