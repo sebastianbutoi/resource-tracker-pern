@@ -5,6 +5,7 @@ import { readDaysTable, filterDays } from "./db/scripts/days/readTable.js";
 import { readNotesTable, readNoteByDay } from "./db/scripts/notes/readTable.js";
 import { populateNotesTable } from "./db/scripts/notes/populateTable.js";
 import { updateNote } from "./db/scripts/notes/updateNote.js";
+import { deleteNoteByDay } from "./db/scripts/notes/deleteNote.js";
 
 dotenv.config();
 const app = express();
@@ -35,7 +36,7 @@ app.get("/note/filter/:title", async (req, res) => {
 app.get("/note/:dayname", async (req, res) => {
   const dayname = req.params.dayname;
   const data = await readNoteByDay({ day: dayname });
-  res.json({ payload: data });
+  res.status(200).json({ payload: data });
 });
 
 app.post("/note/:dayname", async (req, res) => {
@@ -45,7 +46,7 @@ app.post("/note/:dayname", async (req, res) => {
     description: req.body.description,
   };
   const insert = await populateNotesTable(queryParams);
-  res.json({ payload: insert });
+  res.status(201).json({ payload: insert });
 });
 
 app.patch("/note/:dayname", async (req, res) => {
@@ -55,7 +56,16 @@ app.patch("/note/:dayname", async (req, res) => {
     update: req.body.description,
   };
   const updated = await updateNote(queryParams);
-  res.json({ payload: updated });
+  res.status(200).json({ payload: updated });
+});
+
+app.delete("/note/:dayname", async (req, res) => {
+  const queryParams = {
+    day: req.params.dayname,
+    title: req.body.title,
+  };
+  const deleted = deleteNoteByDay(queryParams);
+  res.status(200).json({ payload: deleted });
 });
 
 app.listen(PORT, () => {
