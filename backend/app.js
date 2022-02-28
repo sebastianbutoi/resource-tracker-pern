@@ -9,6 +9,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("<h1>Resource Tracker App</h1>");
+});
+
 app.listen(PORT, () => {
   console.log("Listening on port: ", PORT);
 });
