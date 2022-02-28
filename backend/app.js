@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { readDaysTable, filterDays } from "./db/scripts/days/readTable.js";
 import { readNotesTable, readNoteByDay } from "./db/scripts/notes/readTable.js";
+import { populateNotesTable } from "./db/scripts/notes/populateTable.js";
 
 dotenv.config();
 const app = express();
@@ -38,4 +39,14 @@ app.get("/note/:dayname", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log("Listening on port: ", PORT);
+});
+
+app.post("/note/:dayname", async (req, res) => {
+  const queryParams = {
+    dayname: req.params.dayname,
+    title: req.body.title,
+    description: req.body.description,
+  };
+  const insert = await populateNotesTable(queryParams);
+  res.json({ payload: insert });
 });
