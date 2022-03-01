@@ -1,4 +1,4 @@
-import "./App.css";
+import "./style.css";
 import Week from "../Week/index.js";
 import React from "react";
 import Button from "../Button";
