@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App/index.js';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import CardViewer from './components/CardViewer';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+   <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="cardviewer" element={<CardViewer />} />
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
