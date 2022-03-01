@@ -1,0 +1,13 @@
+#week-wrapper {
+  margin: 2% 2.5% 0 2.5%;
+
+  padding-top: 1vh;
+}
+
+h2 {
+  font-family: sans-serif;
+}
+
+#week-id {
+  font-size: 30px;
+}
